@@ -1,0 +1,30 @@
+.modal__content_type_preview {
+    max-width: 498px;
+    padding: 0;
+    overflow: hidden;
+}
+
+.modal__close-button {
+    top: 24px;
+    right: 24px;
+}
+
+.modal__card-info {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin: 0;
+    padding: 20px 32px 32px;
+}
+
+.modal__caption {
+    font-size: 20px;
+    line-height: 1.2;
+    margin: 0;
+}
+
+.modal__weather {
+    font-size: 20px;
+    line-height: 1.2;
+    margin: 0;
+}
