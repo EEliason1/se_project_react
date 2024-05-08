@@ -1,0 +1,28 @@
+.weather-card {
+    display: flex;
+    position: relative;
+    margin-bottom: 40px;
+    height: 80px;
+    overflow: hidden;
+    border-radius: 12px;
+}
+
+.weather-card__temp {
+    margin: 0;
+    z-index: 1;
+    position: absolute;
+    left: 16px;
+    top: 20px;
+    font-family: 'CabinetGrotesk-Bold', 'sans-serif';
+    font-size: 36px;
+    line-height: 1.1;
+    color: #fff;
+}
+
+.weather-card__background {
+    margin: 0;
+    z-index: 0;
+    object-fit: cover;
+    object-position: right top;
+    width: 100%;
+}

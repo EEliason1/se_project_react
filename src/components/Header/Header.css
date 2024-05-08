@@ -1,0 +1,45 @@
+.header {
+  display: flex;
+  align-items: center;
+  padding-bottom: 28px;
+  font-family: 'CabinetGrotesk-Bold', 'sans-serif';
+  font-size: 20px;
+  line-height: 1.2;
+}
+
+.header__logo {
+  padding: 0;
+  height: 40px;
+  width: 89px;
+  margin-right: 24px;
+}
+
+.header__location {
+  margin: auto 0 3px 0;
+}
+
+.header__user-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.header__name {
+  margin: 0;
+}
+
+.header__avatar {
+  height: 40px;
+  width: 40px;
+}
+
+.header__add-button {
+  border: none;
+  padding: 0;
+  margin: 0 20px 0 auto;
+}
+
+.header__add-button:hover {
+  cursor: pointer;
+  opacity: 60%;
+}
