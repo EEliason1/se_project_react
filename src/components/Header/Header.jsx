@@ -2,11 +2,18 @@ import "./Header.css";
 import logo from "../../assets/wtwr.svg";
 import avatar from "../../assets/sample-avatar.svg";
 
-export default function Header({ handleAddClick }) {
+export default function Header({ handleAddClick, weatherData }) {
+  const currentDate = new Date().toLocaleString("default", {
+    month: "long",
+    day: "numeric",
+  });
+
   return (
     <header className="header">
       <img src={logo} alt="" className="header__logo" />
-      <p className="header__location">June 15, New York</p>
+      <p className="header__location">
+        {currentDate}, {weatherData.city}
+      </p>
       <button
         className="header__add-button"
         type="button"

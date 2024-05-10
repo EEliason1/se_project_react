@@ -96,10 +96,6 @@
   color: rgba(0, 0, 0, 0.5);
 }
 
-.modal__radio-input:active {
-  color: #000;
-}
-
 .modal__submit-button {
   border: none;
   border-radius: 4px;
@@ -108,4 +104,8 @@
   background-color: rgba(0, 0, 0, 0.3);
   height: 36px;
   width: 124px;
+}
+
+.modal__radio-input:has(:checked) {
+  color: #000;
 }

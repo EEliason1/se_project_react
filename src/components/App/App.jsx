@@ -1,13 +1,22 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 import Header from "../Header/Header.jsx";
 import Main from "../Main/Main.jsx";
 import Footer from "../Footer/Footer.jsx";
 import ModalWithForm from "../ModalWithForm/ModalWithForm.jsx";
 import ItemModal from "../ItemModal/ItemModal.jsx";
+import { coordinates, APIkey } from "../../utils/constants.js";
+import { getWeather, filterWeatherData } from "../../utils/weatherApi.js";
 
 export default function App() {
-  const [weatherData, setWeatherData] = useState({ type: "cold" });
+  const [weatherData, setWeatherData] = useState({
+    type: "",
+    temp: { F: 999, C: 999 },
+    city: "",
+    condition: "",
+    isDay: "",
+    daylightHours: { sunrise: 0, sunset: 0 },
+  });
   const [activeModal, setActiveModal] = useState("");
   const [selectedCard, setSelectedCard] = useState({});
 
@@ -24,10 +33,19 @@ export default function App() {
     setActiveModal("");
   };
 
+  useEffect(() => {
+    getWeather(coordinates, APIkey)
+      .then((data) => {
+        const filteredWeatherData = filterWeatherData(data);
+        setWeatherData(filteredWeatherData);
+      })
+      .catch(console.error);
+  }, []);
+
   return (
     <div className="App">
       <div className="App__content">
-        <Header handleAddClick={handleAddClick} />
+        <Header handleAddClick={handleAddClick} weatherData={weatherData} />
         <Main weatherData={weatherData} handleCardClick={handleCardClick} />
         <Footer />
       </div>
@@ -60,15 +78,15 @@ export default function App() {
             Select the weather type:
           </legend>
           <label htmlFor="hot" className="modal__radio-input">
-            <input type="radio" id="hot" name="weatherData" />
+            <input type="radio" id="hot" name="weatherData" value="hot"/>
             Hot
           </label>
-          <label htmlFor="weatherType" className="modal__radio-input">
-            <input type="radio" id="warm" name="weatherData" />
+          <label htmlFor="warm" className="modal__radio-input">
+            <input type="radio" id="warm" name="weatherData" value="warm"/>
             Warm
           </label>
-          <label htmlFor="weatherType" className="modal__radio-input">
-            <input type="radio" id="cold" name="weatherData" />
+          <label htmlFor="cold" className="modal__radio-input">
+            <input type="radio" id="cold" name="weatherData" value="cold"/>
             Cold
           </label>
         </fieldset>

@@ -3,7 +3,7 @@ import "./ItemCard.css";
 export default function ItemCard({ item, onCardClick }) {
   const handleCardClick = () => {
     onCardClick(item);
-  }
+  };
 
   return (
     <li className="card" onClick={handleCardClick}>

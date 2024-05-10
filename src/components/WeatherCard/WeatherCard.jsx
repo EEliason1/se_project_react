@@ -1,11 +1,21 @@
-import './WeatherCard.css'
-import sampleCard from '../../assets/day-sunny.svg'
+import "./WeatherCard.css";
 
-export default function WeatherCard() {
+import { weatherConditions } from "../../utils/constants";
+
+export default function WeatherCard({ weatherData }) {
+  const filteredOptions = weatherConditions.filter((option) => {
     return (
-        <section className="weather-card">
-            <p className="weather-card__temp">75&deg;</p>
-            <img src={sampleCard} alt="" className="weather-card__background" />
-        </section>
+      option.day === weatherData.isDay &&
+      option.condition === weatherData.condition
     );
+  });
+
+  const weatherCondition = filteredOptions[0]?.url;
+
+  return (
+    <section className="weather-card">
+      <p className="weather-card__temp">{weatherData.temp.F.toFixed(0)}&deg;</p>
+      <img src={weatherCondition} alt="" className="weather-card__background" />
+    </section>
+  );
 }
