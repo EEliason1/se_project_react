@@ -1,11 +1,12 @@
 .App {
   background-color: #f3f3f3;
+  padding: 32px 40px 24px;
+
 }
 
 .App__content {
   max-width: 1360px;
-  width: 100%;
   min-height: 822px;
+  width: 100%;
   margin: 0 auto;
-  padding: 32px 40px 24px;
 }

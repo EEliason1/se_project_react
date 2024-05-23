@@ -36,7 +36,7 @@
 .header__add-button {
   border: none;
   padding: 0;
-  margin: 0 20px 0 auto;
+  margin: 0 20px 0;
 }
 
 .header__add-button:hover {

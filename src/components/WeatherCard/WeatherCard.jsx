@@ -14,7 +14,7 @@ export default function WeatherCard({ weatherData }) {
 
   return (
     <section className="weather-card">
-      <p className="weather-card__temp">{weatherData.temp.F.toFixed(0)}&deg;</p>
+      <p className="weather-card__temp">{weatherData.temp.F}</p>
       <img src={weatherCondition} alt="" className="weather-card__background" />
     </section>
   );
