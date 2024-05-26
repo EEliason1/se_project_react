@@ -6,13 +6,14 @@ export default function ModalWithForm({
   titleText,
   activeModal,
   handleCloseClick,
+  onSubmit
 }) {
   return (
     <div
       className={`modal ${activeModal === "add-garment" && "modal__opened"}`}
     >
       <div className="modal__content">
-        <form action="" className="modal__form">
+        <form action="" className="modal__form" onSubmit={onSubmit}>
           <h2 className="modal__title">{titleText}</h2>
           <button
             className="modal__close-button"
@@ -20,7 +21,7 @@ export default function ModalWithForm({
             onClick={handleCloseClick}
           ></button>
           {children}
-          <button className="modal__submit-button" type="submit" disabled>
+          <button className="modal__submit-button" type="submit">
             {buttonText}
           </button>
         </form>

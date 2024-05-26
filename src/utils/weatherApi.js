@@ -16,8 +16,8 @@ export const filterWeatherData = (data) => {
   const result = {};
   result.city = data.name;
   result.temp = {
-    F: `${Math.round(data.main.temp)}°F`,
-    C: `${Math.round((data.main.temp - 32) * 5/9)}°C`,
+    F: Math.round(data.main.temp),
+    C: Math.round(((data.main.temp - 32) * 5) / 9),
   };
   result.condition = data.weather[0].main;
   result.daylightHours = {
@@ -25,7 +25,6 @@ export const filterWeatherData = (data) => {
     sunset: data.sys.sunset,
   };
   result.isDay = isDay(result.daylightHours, Date.now());
-  result.type = getWeatherType(result.temp.F);
   return result;
 };
 
@@ -33,12 +32,22 @@ const isDay = ({ sunrise, sunset }, currentTime) => {
   return currentTime > sunrise * 1000 && currentTime < sunset * 1000;
 };
 
-const getWeatherType = (temperature) => {
-  if (temperature >= 85) {
-    return "hot";
-  } else if (temperature >= 65 && temperature < 85) {
-    return "warm";
+export const getWeatherType = (temperature, unit) => {
+  if (unit === "F") {
+    if (temperature >= 85) {
+      return "hot";
+    } else if (temperature >= 65 && temperature < 85) {
+      return "warm";
+    } else {
+      return "cold";
+    }
   } else {
-    return "cold";
+    if (temperature >= 29) {
+      return "hot";
+    } else if (temperature >= 18 && temperature < 29) {
+      return "warm";
+    } else {
+      return "cold";
+    }
   }
 };
