@@ -3,6 +3,9 @@
   font-family: "CabinetGrotesk-Medium", "sans-serif";
   font-size: 16px;
   line-height: 1.2;
+  position: absolute;
+  bottom: 0px;
+  width: 100%;
 }
 
 .footer__author {
@@ -10,6 +13,5 @@
 }
 
 .footer__year {
-  margin: 0;
-  margin-left: auto;
+  margin: 0 0 0 auto;
 }

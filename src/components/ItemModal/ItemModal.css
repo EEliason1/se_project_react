@@ -1,7 +1,9 @@
 .modal__content_type_preview {
-  max-width: 498px;
-  padding: 0;
+  display: flex;
+  margin: 0;
   overflow: hidden;
+  justify-content: center;
+  flex-direction: column;
 }
 
 .modal__close-button {
@@ -15,6 +17,11 @@
   gap: 12px;
   margin: 0;
   padding: 20px 32px 32px;
+}
+
+.modal__image {
+  height: 498px;
+  width: 498px;
 }
 
 .modal__caption {
