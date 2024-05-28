@@ -27,10 +27,13 @@
 }
 
 .toggle__slider-F {
+  left: 0;
+  transition: 0.4s ease;
 }
 
 .toggle__slider-C {
-    right: 0;
+    left: 28px;
+    transition: 0.4s ease;
 }
 
 .toggle__temp-F {

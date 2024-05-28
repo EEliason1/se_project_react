@@ -3,24 +3,24 @@ import ModalWithForm from "../ModalWithForm/ModalWithForm";
 
 const AddItemModal = ({ activeModal, closeActiveModal, onAddItem }) => {
   const [name, setName] = useState("");
-  const [image, setImage] = useState("");
-  const [type, setType] = useState("");
+  const [imageUrl, setImageUrl] = useState("");
+  const [weather, setWeather] = useState("");
 
   const handleNameChange = (evt) => {
     setName(evt.target.value);
   };
 
   const handleImagechange = (evt) => {
-    setImage(evt.target.value);
+    setImageUrl(evt.target.value);
   };
 
-  const handleTypeChange = (evt) => {
-    setType(evt.target.value);
+  const handleWeatherChange = (evt) => {
+    setWeather(evt.target.value);
   };
 
   const handleFormSubmit = (evt) => {
     evt.preventDefault();
-    onAddItem({ name, image, type });
+    onAddItem({ name, imageUrl, weather });
   };
 
   return (
@@ -53,11 +53,11 @@ const AddItemModal = ({ activeModal, closeActiveModal, onAddItem }) => {
           id="imageUrl"
           placeholder="Image URL"
           name="imageUrl"
-          value={image}
+          value={imageUrl}
           onChange={handleImagechange}
         />
       </label>
-      <fieldset className="modal__radio-buttons" onChange={handleTypeChange}>
+      <fieldset className="modal__radio-buttons" onChange={handleWeatherChange}>
         <legend className="modal__legend" name="weatherData">
           Select the weather type:
         </legend>

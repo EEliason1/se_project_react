@@ -3,5 +3,5 @@
     flex-direction: row;
     padding-top: 19px;
     width: 100%;
-    justify-content: space-between;
+    gap: 150px;
 }

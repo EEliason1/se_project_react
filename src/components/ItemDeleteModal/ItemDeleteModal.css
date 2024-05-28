@@ -1,0 +1,40 @@
+.modal__content_type_delete {
+    max-width: 670px;
+    max-height: 280px;
+    margin: 0;
+    padding: 60px 0;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    font-family: "CabinetGrotesk-Bold", "sans-serif";
+    font-size: 20px;
+    line-height: 1.2;
+}
+
+.modal__confirmation-text {
+    margin: 0;
+    padding: 0;
+}
+
+.modal__confirm-delete {
+    margin: 40px auto 24px;
+    border: none;
+    background-color: transparent;
+    color: #ff4d00;
+}
+
+.modal__confirm-delete:hover {
+    cursor: pointer;
+    opacity: 60%;
+}
+
+.modal__cancel-delete {
+    border: none;
+    background-color: transparent;
+}
+
+.modal__cancel-delete:hover {
+    cursor: pointer;
+    opacity: 60%;
+}

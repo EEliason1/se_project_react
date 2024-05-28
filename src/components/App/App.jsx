@@ -11,6 +11,8 @@ import { coordinates, APIkey } from "../../utils/constants.js";
 import { getWeather, filterWeatherData } from "../../utils/weatherApi.js";
 import { CurrentTemperatureUnitContext } from "../../contexts/CurrentTemperatureUnitContext.js";
 import AddItemModal from "../AddItemModal/AddItemModal.jsx";
+import { deleteItem, getItems, postItem } from "../../utils/api.js";
+import ItemDeleteModal from "../ItemDeleteModal/ItemDeleteModal.jsx";
 
 export default function App() {
   const [weatherData, setWeatherData] = useState({
@@ -24,11 +26,27 @@ export default function App() {
   const [activeModal, setActiveModal] = useState("");
   const [selectedCard, setSelectedCard] = useState({});
   const [currentTemperatureUnit, setCurrentTemperatureUnit] = useState("F");
+  const [clothingItems, setClothingItems] = useState([]);
+
+  const addModalEventListeners = () => {
+    document.addEventListener("keydown", handleEscClose);
+    document.addEventListener("click", handleClickOutside);
+  };
+
+  const removeModalEventListeners = () => {
+    document.removeEventListener("keydown", handleEscClose);
+    document.removeEventListener("keydown", handleClickOutside);
+  };
 
   const openModal = (modal) => {
     setActiveModal(modal);
-    document.addEventListener("keydown", handleEscClose);
-    document.addEventListener("click", handleClickOutside);
+    addModalEventListeners();
+  };
+
+  const openConfirmationModal = () => {
+    closeActiveModal();
+    setActiveModal("delete-item");
+    addModalEventListeners();
   };
 
   const handleCardClick = (card) => {
@@ -51,8 +69,7 @@ export default function App() {
 
   const closeActiveModal = () => {
     setActiveModal("");
-    document.removeEventListener("keydown", handleEscClose);
-    document.removeEventListener("keydown", handleClickOutside);
+    removeModalEventListeners();
   };
 
   const handleEscClose = (evt) => {
@@ -67,8 +84,25 @@ export default function App() {
     }
   };
 
-  const onAddItem = (values) => {
-    console.log(values);
+  const handleAddItemSubmit = (item) => {
+    console.log(item);
+    postItem(item)
+      .then(() => {
+        setClothingItems((clothingItems) => [item, ...clothingItems]);
+        closeActiveModal();
+      })
+      .catch(console.error);
+  };
+
+  const handleDeteleClick = (item) => {
+    deleteItem({ _id: item._id })
+      .then(() => {
+        setClothingItems((currentItems) =>
+          currentItems.filter((clothingItem) => clothingItem._id !== item._id)
+        );
+        closeActiveModal();
+      })
+      .catch(console.error);
   };
 
   useEffect(() => {
@@ -76,6 +110,14 @@ export default function App() {
       .then((data) => {
         const filteredWeatherData = filterWeatherData(data);
         setWeatherData(filteredWeatherData);
+      })
+      .catch(console.error);
+  }, []);
+
+  useEffect(() => {
+    getItems()
+      .then((data) => {
+        setClothingItems(data);
       })
       .catch(console.error);
   }, []);
@@ -94,6 +136,7 @@ export default function App() {
               element={
                 <Main
                   weatherData={weatherData}
+                  clothingItems={clothingItems}
                   handleCardClick={handleCardClick}
                 />
               }
@@ -103,7 +146,8 @@ export default function App() {
               element={
                 <Profile
                   handleAddClick={handleAddClick}
-                  handleCardClick={handleCardClick}
+                  onCardClick={handleCardClick}
+                  clothingItems={clothingItems}
                 />
               }
             />
@@ -113,12 +157,19 @@ export default function App() {
           <AddItemModal
             activeModal={activeModal}
             closeActiveModal={closeActiveModal}
-            onAddItem={onAddItem}
+            onAddItem={handleAddItemSubmit}
           />
           <ItemModal
             activeModal={activeModal}
             selectedCard={selectedCard}
             handleCloseClick={closeActiveModal}
+            onOpenConfirm={openConfirmationModal}
+          />
+          <ItemDeleteModal
+            activeModal={activeModal}
+            handleCloseClick={closeActiveModal}
+            handleDeteleClick={handleDeteleClick}
+            clothingItem={selectedCard}
           />
         </CurrentTemperatureUnitContext.Provider>
       </div>

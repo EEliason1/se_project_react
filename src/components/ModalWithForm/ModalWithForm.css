@@ -103,9 +103,18 @@
   border-radius: 4px;
   padding: 8px 16px;
   color: #fff;
-  background-color: rgba(0, 0, 0, 0.3);
+  background-color: #000;
   height: 36px;
   width: 124px;
+}
+
+.modal__submit-button_disabled {
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+.modal__submit-button_disabled:hover {
+  opacity: 1;
+  cursor: default;
 }
 
 .modal__radio-input:has(:checked) {
