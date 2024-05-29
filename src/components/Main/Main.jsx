@@ -9,7 +9,7 @@ export default function Main({ weatherData, handleCardClick, clothingItems }) {
   const { currentTemperatureUnit } = useContext(CurrentTemperatureUnitContext);
 
   const temp = weatherData?.temp?.[currentTemperatureUnit] || 999;
-  weatherData.type = getWeatherType(temp, currentTemperatureUnit);
+  const weatherType = getWeatherType(temp, currentTemperatureUnit);
 
   return (
     <main>
@@ -22,7 +22,7 @@ export default function Main({ weatherData, handleCardClick, clothingItems }) {
         <ul className="cards__list">
           {clothingItems
             .filter((item) => {
-              return item.weather === weatherData.type;
+              return item.weather === weatherType;
             })
             .map((item) => {
               return (

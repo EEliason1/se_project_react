@@ -1,10 +1,4 @@
-const checkPromiseValidity = (res) => {
-  if (res.ok) {
-    return res.json();
-  } else {
-    return Promise.reject(`Error: ${res.status}`);
-  }
-};
+import { checkPromiseValidity } from "./utils.js";
 
 export const getWeather = ({ latitude, longitude }, APIkey) => {
   return fetch(

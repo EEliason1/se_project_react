@@ -4,13 +4,13 @@ export default function ModalWithForm({
   children,
   buttonText,
   titleText,
-  activeModal,
   handleCloseClick,
-  onSubmit
+  onSubmit,
+  isOpen
 }) {
   return (
     <div
-      className={`modal ${activeModal === "add-garment" && "modal__opened"}`}
+      className={`modal ${isOpen && "modal__opened"}`}
     >
       <div className="modal__content">
         <form action="" className="modal__form" onSubmit={onSubmit}>

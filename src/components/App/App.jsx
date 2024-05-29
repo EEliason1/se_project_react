@@ -59,12 +59,7 @@ export default function App() {
   };
 
   const handleToggleSwitchChange = () => {
-    if (currentTemperatureUnit === "F") {
-      setCurrentTemperatureUnit("C");
-    }
-    if (currentTemperatureUnit === "C") {
-      setCurrentTemperatureUnit("F");
-    }
+    setCurrentTemperatureUnit(currentTemperatureUnit === "F" ? "C" : "F");
   };
 
   const closeActiveModal = () => {
@@ -85,10 +80,9 @@ export default function App() {
   };
 
   const handleAddItemSubmit = (item) => {
-    console.log(item);
     postItem(item)
-      .then(() => {
-        setClothingItems((clothingItems) => [item, ...clothingItems]);
+      .then((res) => {
+        setClothingItems((clothingItems) => [res, ...clothingItems]);
         closeActiveModal();
       })
       .catch(console.error);
@@ -154,11 +148,14 @@ export default function App() {
           </Routes>
 
           <Footer />
-          <AddItemModal
-            activeModal={activeModal}
-            closeActiveModal={closeActiveModal}
-            onAddItem={handleAddItemSubmit}
-          />
+          {activeModal === "add-garment" && (
+            <AddItemModal
+              activeModal={activeModal}
+              closeActiveModal={closeActiveModal}
+              onAddItem={handleAddItemSubmit}
+              isOpen={activeModal === "add-garment"}
+            />
+          )}
           <ItemModal
             activeModal={activeModal}
             selectedCard={selectedCard}
