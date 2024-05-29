@@ -27,8 +27,7 @@ const AddItemModal = ({ activeModal, closeActiveModal, onAddItem, isOpen }) => {
 
   const handleFormSubmit = (evt) => {
     evt.preventDefault();
-    onAddItem({ name, imageUrl, weather });
-    handleItemStateReset();
+    onAddItem({ name, imageUrl, weather }, handleItemStateReset);
   };
 
   return (
@@ -51,6 +50,7 @@ const AddItemModal = ({ activeModal, closeActiveModal, onAddItem, isOpen }) => {
           maxLength="30"
           value={name}
           onChange={handleNameChange}
+          required
         />
       </label>
       <label htmlFor="imageUrl" className="modal__label">
@@ -63,6 +63,7 @@ const AddItemModal = ({ activeModal, closeActiveModal, onAddItem, isOpen }) => {
           name="imageUrl"
           value={imageUrl}
           onChange={handleImagechange}
+          required
         />
       </label>
       <fieldset className="modal__radio-buttons" onChange={handleWeatherChange}>
@@ -70,7 +71,13 @@ const AddItemModal = ({ activeModal, closeActiveModal, onAddItem, isOpen }) => {
           Select the weather type:
         </legend>
         <label htmlFor="hot" className="modal__radio-input">
-          <input type="radio" id="hot" name="weatherData" value="hot" />
+          <input
+            type="radio"
+            id="hot"
+            name="weatherData"
+            value="hot"
+            required
+          />
           Hot
         </label>
         <label htmlFor="warm" className="modal__radio-input">

@@ -79,10 +79,11 @@ export default function App() {
     }
   };
 
-  const handleAddItemSubmit = (item) => {
+  const handleAddItemSubmit = (item, handleItemStateReset) => {
     postItem(item)
       .then((res) => {
         setClothingItems((clothingItems) => [res, ...clothingItems]);
+        handleItemStateReset();
         closeActiveModal();
       })
       .catch(console.error);
