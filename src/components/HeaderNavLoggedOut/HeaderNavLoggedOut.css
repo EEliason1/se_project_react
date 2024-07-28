@@ -1,0 +1,14 @@
+.header_logged-out {
+    padding: 0;
+}
+
+.header__user-action-button {
+    border: none;
+    padding: 0;
+    margin: 0 0 0 20px;
+}
+
+.header__user-action-button:hover {
+    cursor: pointer;
+    opacity: 60%;
+  }

@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate, Link } from "react-router-dom";
 
 import "./App.css";
+import LoginModal from "../LoginModal/LoginModal.jsx";
+import RegisterModal from "../RegisterModal/RegisterModal.jsx";
 import Header from "../Header/Header.jsx";
 import Main from "../Main/Main.jsx";
 import Profile from "../Profile/Profile.jsx";
@@ -15,6 +17,7 @@ import { deleteItem, getItems, postItem } from "../../utils/api.js";
 import ItemDeleteModal from "../ItemDeleteModal/ItemDeleteModal.jsx";
 
 export default function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [weatherData, setWeatherData] = useState({
     type: "",
     temp: { F: 999, C: 999 },
@@ -61,6 +64,18 @@ export default function App() {
   const handleToggleSwitchChange = () => {
     setCurrentTemperatureUnit(currentTemperatureUnit === "F" ? "C" : "F");
   };
+
+  const handleLogInClick = () => {
+    openModal("login");
+  };
+
+  const handleSignUpClick = () => {
+    openModal("register");
+  };
+
+  const handleLogIn = () => {};
+
+  const handleSignUp = () => {};
 
   const closeActiveModal = () => {
     setActiveModal("");
@@ -123,7 +138,13 @@ export default function App() {
         <CurrentTemperatureUnitContext.Provider
           value={{ currentTemperatureUnit, handleToggleSwitchChange }}
         >
-          <Header handleAddClick={handleAddClick} weatherData={weatherData} />
+          <Header
+            handleAddClick={handleAddClick}
+            handleLoginClick={handleLogInClick}
+            handleSignUpClick={handleSignUpClick}
+            weatherData={weatherData}
+            isLoggedIn={isLoggedIn}
+          />
 
           <Routes>
             <Route
@@ -157,6 +178,18 @@ export default function App() {
               isOpen={activeModal === "add-garment"}
             />
           )}
+          <LoginModal
+            handleCloseClick={closeActiveModal}
+            isOpen={activeModal === "login"}
+            handleSignUpClick={handleSignUpClick}
+            onLogIn={handleLogIn}
+          />
+          <RegisterModal
+            handleCloseClick={closeActiveModal}
+            isOpen={activeModal === "register"}
+            handleLogInClick={handleLogInClick}
+            onSignUp={handleSignUp}
+          />
           <ItemModal
             activeModal={activeModal}
             selectedCard={selectedCard}

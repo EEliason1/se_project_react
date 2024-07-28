@@ -98,14 +98,16 @@
   color: rgba(0, 0, 0, 0.5);
 }
 
+.modal__submit-buttons {
+  display: flex;
+}
+
 .modal__submit-button {
   border: none;
   border-radius: 4px;
   padding: 8px 16px;
   color: #fff;
   background-color: #000;
-  height: 36px;
-  width: 124px;
 }
 
 .modal__submit-button_disabled {
@@ -119,4 +121,14 @@
 
 .modal__radio-input:has(:checked) {
   color: #000;
+}
+
+.modal__submit-button_additional {
+  background-color: transparent;
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.modal__submit-button_additional:hover {
+  color: #000;
+  cursor: pointer;
 }
