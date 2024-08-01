@@ -5,29 +5,41 @@ import "./RegisterModal.css";
 const RegisterModal = ({
   handleCloseClick,
   isOpen,
-  handleSignUpModalSubmit,
-  handleLogInClick
+  onSignUp,
+  handleLogInClick,
 }) => {
-  const [userEmail, setUserEmail] = useState("");
-  const [userPassword, setUserPassword] = useState("");
-  const [userName, setUserName] = useState("");
-  const [userAvatar, setUserAvatar] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
+  const [avatar, setAvatar] = useState("");
 
   const handleEmailChange = (evt) => {
-    setUserEmail(evt.target.value);
+    setEmail(evt.target.value);
   };
 
   const handlePasswordChange = (evt) => {
-    setUserPassword(evt.target.value);
+    setPassword(evt.target.value);
   };
 
   const handleNameChange = (evt) => {
-    setUserName(evt.target.value);
-  }
+    setName(evt.target.value);
+  };
 
   const handleAvatarChange = (evt) => {
-    setUserAvatar(evt.target.value);
-  }
+    setAvatar(evt.target.value);
+  };
+
+  const handleUserStateReset = () => {
+    setAvatar("");
+    setEmail("");
+    setName("");
+    setPassword("");
+  };
+
+  const handleFormSubmit = (evt) => {
+    evt.preventDefault();
+    onSignUp({ email, password, name, avatar }, handleUserStateReset);
+  };
 
   return (
     <ModalWithForm
@@ -35,7 +47,7 @@ const RegisterModal = ({
       buttonText="Sign Up"
       secondButtonText="or Log In"
       handleCloseClick={handleCloseClick}
-      onSubmit={handleSignUpModalSubmit}
+      onSubmit={handleFormSubmit}
       handleModalChange={handleLogInClick}
       isOpen={isOpen}
     >
@@ -49,7 +61,7 @@ const RegisterModal = ({
           name="Email"
           minLength="2"
           maxLength="30"
-          value={userEmail}
+          value={email}
           onChange={handleEmailChange}
           required
         />
@@ -64,7 +76,7 @@ const RegisterModal = ({
           name="Password"
           minLength="2"
           maxLength="30"
-          value={userPassword}
+          value={password}
           onChange={handlePasswordChange}
           required
         />
@@ -79,7 +91,7 @@ const RegisterModal = ({
           name="Name"
           minLength="2"
           maxLength="30"
-          value={userName}
+          value={name}
           onChange={handleNameChange}
           required
         />
@@ -92,9 +104,7 @@ const RegisterModal = ({
           id="avatar"
           placeholder="Avatar URL"
           name="avatar"
-          minLength="2"
-          maxLength="30"
-          value={userAvatar}
+          value={avatar}
           onChange={handleAvatarChange}
           required
         />

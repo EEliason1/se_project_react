@@ -1,13 +1,17 @@
 .sidebar {
-  display: flex;
   max-width: 275px;
   width: 100%;
+}
+
+.sidebar__user-info {
+  display: flex;
   align-items: center;
 }
 
 .sidebar__avatar {
   width: 56px;
   height: 56px;
+  border-radius: 56px;
   margin: 0 16px 0 0;
 }
 
@@ -16,4 +20,25 @@
   font-size: 20px;
   line-height: 1.2;
   margin: 0 auto;
+}
+
+.sidebar__buttons {
+  padding-top: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.sidebar__button {
+  border: none;
+  color: #000;
+  font-family: "CabinetGrotesk-Bold", "sans-serif";
+  font-size: 20px;
+  line-height: 1.2;
+}
+
+.sidebar__button:hover {
+  opacity: 0.6;
+  cursor: pointer;
 }

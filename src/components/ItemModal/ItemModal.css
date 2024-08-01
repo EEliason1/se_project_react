@@ -51,7 +51,17 @@
   line-height: 1.2;
 }
 
-.modal__card-delete-button:hover {
+.modal__card-delete-button_visible:hover {
   cursor: pointer;
   opacity: 60%;
+}
+
+.modal__card-delete-button_visible {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.modal__card-delete-button_hidden {
+  opacity: 0;
+  pointer-events: none;
 }

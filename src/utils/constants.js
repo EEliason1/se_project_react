@@ -28,6 +28,11 @@ export const weatherConditions = [
   },
   {
     day: true,
+    condition: "Dust",
+    url: new URL("../assets/Day/fog.svg", import.meta.url).href,
+  },
+  {
+    day: true,
     condition: "Rain",
     url: new URL("../assets/Day/rain.svg", import.meta.url).href,
   },
@@ -64,6 +69,11 @@ export const weatherConditions = [
   {
     day: false,
     condition: "Fog",
+    url: new URL("../assets/Night/fog.svg", import.meta.url).href,
+  },
+  {
+    day: false,
+    condition: "Dust",
     url: new URL("../assets/Night/fog.svg", import.meta.url).href,
   },
   {

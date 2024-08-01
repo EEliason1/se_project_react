@@ -1,3 +1,5 @@
+import { CurrentUserContext } from "../../contexts/CurrentUserContext";
+import { useContext } from "react";
 import "./ItemModal.css";
 
 export default function ItemModal({
@@ -6,6 +8,14 @@ export default function ItemModal({
   selectedCard,
   onOpenConfirm,
 }) {
+  const currentUser = useContext(CurrentUserContext);
+  const isOwn = selectedCard.owner === currentUser._id;
+  const itemDeleteButtonClassName = `modal__card-delete-button ${
+    isOwn
+      ? "modal__card-delete-button_visible"
+      : "modal__card-delete-button_hidden"
+  }`;
+
   return (
     <div className={`modal ${activeModal === "preview" && "modal__opened"}`}>
       <div className="modal__content modal__content_type_preview">
@@ -25,7 +35,7 @@ export default function ItemModal({
             <p className="modal__weather">Weather: {selectedCard.weather}</p>
           </div>
           <button
-            className="modal__card-delete-button"
+            className={itemDeleteButtonClassName}
             type="button"
             onClick={onOpenConfirm}
           >

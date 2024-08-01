@@ -5,18 +5,28 @@ import "./LoginModal.css";
 const LoginModal = ({
   handleCloseClick,
   isOpen,
-  handleLogInModalSubmit,
+  onLogIn,
   handleSignUpClick,
 }) => {
-  const [userEmail, setUserEmail] = useState("");
-  const [userPassword, setUserPassword] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const handleEmailChange = (evt) => {
-    setUserEmail(evt.target.value);
+    setEmail(evt.target.value);
   };
 
   const handlePasswordChange = (evt) => {
-    setUserPassword(evt.target.value);
+    setPassword(evt.target.value);
+  };
+
+  const handleUserStateReset = () => {
+    setEmail("");
+    setPassword("");
+  };
+
+  const handleFormSubmit = (evt) => {
+    evt.preventDefault();
+    onLogIn({ email, password }, handleUserStateReset);
   };
 
   return (
@@ -25,7 +35,7 @@ const LoginModal = ({
       buttonText="Log In"
       secondButtonText="or Sign Up"
       handleCloseClick={handleCloseClick}
-      onSubmit={handleLogInModalSubmit}
+      onSubmit={handleFormSubmit}
       handleModalChange={handleSignUpClick}
       isOpen={isOpen}
     >
@@ -39,7 +49,7 @@ const LoginModal = ({
           name="Email"
           minLength="2"
           maxLength="30"
-          value={userEmail}
+          value={email}
           onChange={handleEmailChange}
           required
         />
@@ -54,7 +64,7 @@ const LoginModal = ({
           name="Password"
           minLength="2"
           maxLength="30"
-          value={userPassword}
+          value={password}
           onChange={handlePasswordChange}
           required
         />
