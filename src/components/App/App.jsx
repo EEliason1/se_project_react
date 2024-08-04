@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 
 import "./App.css";
 import LoginModal from "../LoginModal/LoginModal.jsx";
@@ -13,7 +13,14 @@ import { coordinates, APIkey } from "../../utils/constants.js";
 import { getWeather, filterWeatherData } from "../../utils/weatherApi.js";
 import { CurrentTemperatureUnitContext } from "../../contexts/CurrentTemperatureUnitContext.js";
 import AddItemModal from "../AddItemModal/AddItemModal.jsx";
-import { deleteItem, getItems, postItem } from "../../utils/api.js";
+import {
+  deleteItem,
+  getItems,
+  postItem,
+  updateUser,
+  addCardLike,
+  removeCardLike,
+} from "../../utils/api.js";
 import ItemDeleteModal from "../ItemDeleteModal/ItemDeleteModal.jsx";
 import { signin, signup, checkToken } from "../../utils/auth.js";
 import EditProfileModal from "../EditProfileModal/EditProfileModal.jsx";
@@ -40,6 +47,8 @@ export default function App() {
   const [selectedCard, setSelectedCard] = useState({});
   const [currentTemperatureUnit, setCurrentTemperatureUnit] = useState("F");
   const [clothingItems, setClothingItems] = useState([]);
+
+  const navigate = useNavigate();
 
   const addModalEventListeners = () => {
     document.addEventListener("keydown", handleEscClose);
@@ -94,14 +103,6 @@ export default function App() {
         localStorage.setItem("jwt", res.token);
         setIsLoggedIn(true);
         closeActiveModal();
-
-        // checkToken(res.token)
-        //   .then((res) => {
-        //     setIsLoggedIn(true);
-        //     setCurrentUser(res);
-        //     closeActiveModal();
-        //   })
-        //   .catch(console.error);
       })
       .catch(console.error);
   };
@@ -153,6 +154,8 @@ export default function App() {
   const handleLogOutClick = () => {
     localStorage.removeItem("jwt");
     setIsLoggedIn("false");
+    navigate("/");
+    window.location.reload();
   };
 
   const handleProfileEditClick = () => {
@@ -160,7 +163,36 @@ export default function App() {
   };
 
   const handleProfileEditSubmit = (newInfo) => {
-    console.log(newInfo);
+    const token = localStorage.getItem("jwt");
+    updateUser(newInfo, token)
+      .then(() => {
+        closeActiveModal();
+      })
+      .catch(console.error);
+  };
+
+  const handleCardLike = (item, isLiked) => {
+    const token = localStorage.getItem("jwt");
+
+    !isLiked
+      ? addCardLike({ _id: item._id }, token)
+          .then((updatedCard) => {
+            setClothingItems((cards) => {
+              cards.map((item) =>
+                item._id === currentUser._id ? updatedCard : item
+              );
+            });
+          })
+          .catch(console.error)
+      : removeCardLike({ _id: item._id }, token)
+          .then((updatedCard) => {
+            setClothingItems((cards) => {
+              cards.map((item) =>
+                item._id === currentUser._id ? updatedCard : item
+              );
+            });
+          })
+          .catch(console.error);
   };
 
   useEffect(() => {
@@ -215,6 +247,8 @@ export default function App() {
                     weatherData={weatherData}
                     clothingItems={clothingItems}
                     handleCardClick={handleCardClick}
+                    onCardLike={handleCardLike}
+                    isLoggedIn={isLoggedIn}
                   />
                 }
               />
@@ -227,6 +261,8 @@ export default function App() {
                     clothingItems={clothingItems}
                     handleLogOutClick={handleLogOutClick}
                     handleProfileEditClick={handleProfileEditClick}
+                    onCardLike={handleCardLike}
+                    isLoggedIn={isLoggedIn}
                   />
                 }
               />
@@ -257,6 +293,7 @@ export default function App() {
               handleCloseClick={closeActiveModal}
               isOpen={activeModal === "profile-edit"}
               onEditSubmit={handleProfileEditSubmit}
+              currentUser={currentUser}
             />
             <ItemModal
               activeModal={activeModal}

@@ -27,13 +27,19 @@
   justify-content: center;
 }
 
-.card__name {
+.card__header {
   margin: 0;
-  padding: 2px 12px;
   position: absolute;
   top: 15px;
   z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.card__name {
   font-family: "CabinetGrotesk-Bold", "sans-serif";
+  padding: 2px 12px;
   font-size: 16px;
   line-height: 1.25;
   color: rgba(0, 0, 0, 0.6);

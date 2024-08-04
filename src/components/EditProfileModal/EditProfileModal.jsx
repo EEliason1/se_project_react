@@ -6,6 +6,7 @@ const EditProfileModal = ({
   handleCloseClick,
   isOpen,
   onEditSubmit,
+  currentUser,
 }) => {
   const [name, setName] = useState("");
   const [avatar, setAvatar] = useState("");
@@ -42,7 +43,7 @@ const EditProfileModal = ({
           type="name"
           className="modal__input"
           id="name"
-          placeholder="Name"
+          placeholder={currentUser.name}
           name="Name"
           minLength="2"
           maxLength="30"
@@ -57,7 +58,7 @@ const EditProfileModal = ({
           type="text"
           className="modal__input"
           id="avatar"
-          placeholder="Avatar"
+          placeholder={currentUser.avatar}
           name="Avatar"
           value={avatar}
           onChange={handleAvatarChange}

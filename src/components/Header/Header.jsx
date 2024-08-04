@@ -4,7 +4,6 @@ import ToggleSwitch from "../ToggleSwitch/ToggleSwitch";
 import { Link } from "react-router-dom";
 import HeaderNavLoggedOut from "../HeaderNavLoggedOut/HeaderNavLoggedOut";
 import HeaderNavLoggedIn from "../HeaderNavLoggedIn/HeaderNavLoggedIn";
-import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 
 export default function Header({
   handleAddClick,

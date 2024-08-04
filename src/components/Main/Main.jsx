@@ -5,7 +5,13 @@ import ItemCard from "../ItemCard/ItemCard.jsx";
 import { CurrentTemperatureUnitContext } from "../../contexts/CurrentTemperatureUnitContext.js";
 import { getWeatherType } from "../../utils/weatherApi.js";
 
-export default function Main({ weatherData, handleCardClick, clothingItems }) {
+export default function Main({
+  weatherData,
+  handleCardClick,
+  clothingItems,
+  onCardLike,
+  isLoggedIn
+}) {
   const { currentTemperatureUnit } = useContext(CurrentTemperatureUnitContext);
 
   const temp = weatherData?.temp?.[currentTemperatureUnit] || 999;
@@ -30,6 +36,8 @@ export default function Main({ weatherData, handleCardClick, clothingItems }) {
                   key={item._id}
                   item={item}
                   onCardClick={handleCardClick}
+                  onCardLike={onCardLike}
+                  isLoggedIn={isLoggedIn}
                 />
               );
             })}

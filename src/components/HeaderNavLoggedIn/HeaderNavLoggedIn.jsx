@@ -7,7 +7,7 @@ import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 const HeaderNavLoggedIn = ({ handleAddClick }) => {
   const currentUser = useContext(CurrentUserContext);
   const currentName = currentUser ? currentUser.name : "Undefined";
-  const currentAvatar = currentUser ? currentUser.avatar : avatar;
+  const currentAvatar = currentUser?.avatar ? currentUser.avatar : avatar;
 
   return (
     <div className="header header_logged-in">

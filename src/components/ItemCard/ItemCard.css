@@ -1,0 +1,19 @@
+.item__like-button {
+  width: 18px;
+  height: 15px;
+  border: none;
+  background-color: transparent;
+}
+
+.item__like-button:hover {
+  opacity: 0.6;
+  cursor: pointer;
+}
+
+.item__like-button_active {
+  background-image: url("../../assets/disliked.svg");
+}
+
+.item__like-button_inactive {
+  background-image: url("../../assets/liked.svg");
+}
