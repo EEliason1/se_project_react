@@ -24,9 +24,11 @@ export default function ItemCard({
   };
 
   return (
-    <li className="card" onClick={handleCardClick}>
+    <li className="card">
       <div className="card__header">
-        <h2 className="card__name">{item.name}</h2>
+        <h2 className="card__name" onClick={handleCardClick}>
+          {item.name}
+        </h2>
         {isLoggedIn ? (
           <button
             className={`item__like-button ${likeButtonClassName}`}
@@ -37,7 +39,12 @@ export default function ItemCard({
           <></>
         )}
       </div>
-      <img className="card__image" src={item.imageUrl} alt={item.name} />
+      <img
+        className="card__image"
+        src={item.imageUrl}
+        alt={item.name}
+        onClick={handleCardClick}
+      />
     </li>
   );
 }

@@ -8,7 +8,7 @@ export default function ClothesSection({
   onCardClick,
   clothingItems,
   onCardLike,
-  isLoggedIn
+  isLoggedIn,
 }) {
   const currentUser = useContext(CurrentUserContext);
 
@@ -25,7 +25,8 @@ export default function ClothesSection({
         </button>
       </div>
       <ul className="clothes-section__card-list">
-        {clothingItems.map((item) => {
+        {/* {console.log(clothingItems)} */}
+        {clothingItems?.map((item) => {
           let isOwn = item.owner === currentUser._id;
           if (isOwn) {
             return (

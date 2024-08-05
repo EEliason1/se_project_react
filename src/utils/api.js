@@ -20,11 +20,14 @@ function postItem({ name, imageUrl, weather }, token) {
 function deleteItem({ _id }, token) {
   return fetch(`${baseUrl}/items/${_id}`, {
     method: "DELETE",
-    authorization: `Bearer ${token}`,
+    headers: {
+      "Content-Type": "application/json",
+      authorization: `Bearer ${token}`,
+    },
   }).then(checkPromiseValidity);
 }
 
-function addCardLike({_id}, token) {
+function addCardLike(_id, token) {
   return fetch(`${baseUrl}/items/${_id}/likes`, {
     method: "PUT",
     headers: {
@@ -34,7 +37,7 @@ function addCardLike({_id}, token) {
   }).then(checkPromiseValidity);
 }
 
-function removeCardLike({ _id }, token) {
+function removeCardLike(_id, token) {
   return fetch(`${baseUrl}/items/${_id}/likes`, {
     method: "DELETE",
     headers: {

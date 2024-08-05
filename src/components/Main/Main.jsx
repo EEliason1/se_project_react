@@ -10,7 +10,7 @@ export default function Main({
   handleCardClick,
   clothingItems,
   onCardLike,
-  isLoggedIn
+  isLoggedIn,
 }) {
   const { currentTemperatureUnit } = useContext(CurrentTemperatureUnitContext);
 
@@ -27,10 +27,10 @@ export default function Main({
         </p>
         <ul className="cards__list">
           {clothingItems
-            .filter((item) => {
+            ?.filter((item) => {
               return item.weather === weatherType;
             })
-            .map((item) => {
+            ?.map((item) => {
               return (
                 <ItemCard
                   key={item._id}

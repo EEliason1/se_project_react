@@ -132,7 +132,7 @@ export default function App() {
     const token = localStorage.getItem("jwt");
     postItem(item, token)
       .then((res) => {
-        setClothingItems((clothingItems) => [res, ...clothingItems]);
+        setClothingItems((clothingItems) => [res.data, ...clothingItems]);
         handleItemStateReset();
         closeActiveModal();
       })
@@ -165,32 +165,33 @@ export default function App() {
   const handleProfileEditSubmit = (newInfo) => {
     const token = localStorage.getItem("jwt");
     updateUser(newInfo, token)
-      .then(() => {
+      .then((res) => {
+        setCurrentUser(res);
         closeActiveModal();
       })
       .catch(console.error);
   };
 
-  const handleCardLike = (item, isLiked) => {
+  const handleCardLike = ({ _id }, isLiked) => {
     const token = localStorage.getItem("jwt");
 
     !isLiked
-      ? addCardLike({ _id: item._id }, token)
+      ? addCardLike(_id, token)
           .then((updatedCard) => {
-            setClothingItems((cards) => {
-              cards.map((item) =>
-                item._id === currentUser._id ? updatedCard : item
-              );
-            });
+            setClothingItems(
+              clothingItems.map((item) =>
+                item._id === _id ? updatedCard.data : item
+              )
+            );
           })
           .catch(console.error)
-      : removeCardLike({ _id: item._id }, token)
+      : removeCardLike(_id, token)
           .then((updatedCard) => {
-            setClothingItems((cards) => {
-              cards.map((item) =>
-                item._id === currentUser._id ? updatedCard : item
-              );
-            });
+            setClothingItems(
+              clothingItems.map((item) =>
+                item._id === _id ? updatedCard.data : item
+              )
+            );
           })
           .catch(console.error);
   };
