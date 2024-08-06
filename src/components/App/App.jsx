@@ -316,7 +316,6 @@ export default function App() {
               handleCloseClick={closeActiveModal}
               isOpen={activeModal === "profile-edit"}
               onEditSubmit={handleProfileEditSubmit}
-              currentUser={currentUser}
               isLoading={isLoading}
             />
             <ItemModal
