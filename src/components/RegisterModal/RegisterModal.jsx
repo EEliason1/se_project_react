@@ -7,6 +7,7 @@ const RegisterModal = ({
   isOpen,
   onSignUp,
   handleLogInClick,
+  isLoading
 }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -44,8 +45,8 @@ const RegisterModal = ({
   return (
     <ModalWithForm
       titleText="Sign Up"
-      buttonText="Sign Up"
-      secondButtonText="or Log In"
+      buttonText={isLoading ? "Saving..." : "Sign Up"}
+      secondButtonText={isLoading ? "Loading..." : "or Log In"}
       handleCloseClick={handleCloseClick}
       onSubmit={handleFormSubmit}
       handleModalChange={handleLogInClick}

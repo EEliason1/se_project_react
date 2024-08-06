@@ -5,6 +5,7 @@ export default function ItemDeleteModal({
   handleCloseClick,
   handleDeteleClick,
   clothingItem,
+  isLoading
 }) {
   const handleItemDelete = (evt) => {
     evt.preventDefault();
@@ -31,7 +32,7 @@ export default function ItemDeleteModal({
           type="button"
           onClick={handleItemDelete}
         >
-          Yes, delete item
+          {isLoading ? "Deleting..." : "Yes, delete item"}
         </button>
         <button
           className="modal__cancel-delete"

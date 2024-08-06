@@ -25,9 +25,8 @@ export default function ClothesSection({
         </button>
       </div>
       <ul className="clothes-section__card-list">
-        {/* {console.log(clothingItems)} */}
         {clothingItems?.map((item) => {
-          let isOwn = item.owner === currentUser._id;
+          const isOwn = item.owner === currentUser._id;
           if (isOwn) {
             return (
               <ItemCard

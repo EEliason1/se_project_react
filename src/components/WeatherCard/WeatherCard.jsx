@@ -20,7 +20,11 @@ export default function WeatherCard({ weatherData }) {
       <p className="weather-card__temp">
         {weatherData?.temp?.[currentTemperatureUnit]}°{currentTemperatureUnit}
       </p>
-      <img src={weatherCondition} alt="" className="weather-card__background" />
+      <img
+        src={weatherCondition}
+        alt={filteredOptions?.condition}
+        className="weather-card__background"
+      />
     </section>
   );
 }

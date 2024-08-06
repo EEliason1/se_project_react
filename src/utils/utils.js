@@ -6,4 +6,8 @@ const checkPromiseValidity = (res) => {
     }
   };
 
-  export { checkPromiseValidity };
+  const request = (url, options) => {
+    return fetch(url, options).then(checkPromiseValidity);
+  }
+
+  export { checkPromiseValidity, request };

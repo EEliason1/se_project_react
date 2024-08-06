@@ -25,6 +25,7 @@ import ItemDeleteModal from "../ItemDeleteModal/ItemDeleteModal.jsx";
 import { signin, signup, checkToken } from "../../utils/auth.js";
 import EditProfileModal from "../EditProfileModal/EditProfileModal.jsx";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext.js";
+import ProtectedRoute from "../ProtectedRoute/ProtectedRoute.jsx";
 
 export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -47,33 +48,19 @@ export default function App() {
   const [selectedCard, setSelectedCard] = useState({});
   const [currentTemperatureUnit, setCurrentTemperatureUnit] = useState("F");
   const [clothingItems, setClothingItems] = useState([]);
-
-  const navigate = useNavigate();
-
-  const addModalEventListeners = () => {
-    document.addEventListener("keydown", handleEscClose);
-    document.addEventListener("click", handleClickOutside);
-  };
-
-  const removeModalEventListeners = () => {
-    document.removeEventListener("keydown", handleEscClose);
-    document.removeEventListener("keydown", handleClickOutside);
-  };
+  const [isLoading, setIsLoading] = useState(false);
 
   const openModal = (modal) => {
     setActiveModal(modal);
-    addModalEventListeners();
   };
 
   const closeActiveModal = () => {
     setActiveModal("");
-    removeModalEventListeners();
   };
 
   const openConfirmationModal = () => {
     closeActiveModal();
-    setActiveModal("delete-item");
-    addModalEventListeners();
+    openModal("delete-item");
   };
 
   const handleCardClick = (card) => {
@@ -98,49 +85,50 @@ export default function App() {
   };
 
   const handleLogIn = (userInfo) => {
+    setIsLoading(true);
     signin(userInfo)
       .then((res) => {
         localStorage.setItem("jwt", res.token);
         setIsLoggedIn(true);
         closeActiveModal();
       })
-      .catch(console.error);
+      .catch(console.error)
+      .finally(() => {
+        setIsLoading(false);
+      });
   };
 
   const handleSignUp = (newUserInfo) => {
+    setIsLoading(true);
     signup(newUserInfo)
       .then(() => {
         handleLogIn(newUserInfo);
         closeActiveModal();
       })
-      .catch(console.error);
-  };
-
-  const handleEscClose = (evt) => {
-    if (evt.key === "Escape") {
-      closeActiveModal();
-    }
-  };
-
-  const handleClickOutside = (evt) => {
-    if (evt.target.classList.contains("modal")) {
-      closeActiveModal();
-    }
+      .catch(console.error)
+      .finally(() => {
+        setIsLoading(false);
+      });
   };
 
   const handleAddItemSubmit = (item, handleItemStateReset) => {
     const token = localStorage.getItem("jwt");
+    setIsLoading(true);
     postItem(item, token)
       .then((res) => {
         setClothingItems((clothingItems) => [res.data, ...clothingItems]);
         handleItemStateReset();
         closeActiveModal();
       })
-      .catch(console.error);
+      .catch(console.error)
+      .finally(() => {
+        setIsLoading(false);
+      });
   };
 
   const handleDeteleClick = (item) => {
     const token = localStorage.getItem("jwt");
+    setIsLoading(true);
     deleteItem({ _id: item._id }, token)
       .then(() => {
         setClothingItems((currentItems) =>
@@ -148,14 +136,15 @@ export default function App() {
         );
         closeActiveModal();
       })
-      .catch(console.error);
+      .catch(console.error)
+      .finally(() => {
+        setIsLoading(false);
+      });
   };
 
   const handleLogOutClick = () => {
     localStorage.removeItem("jwt");
-    setIsLoggedIn("false");
-    navigate("/");
-    window.location.reload();
+    setIsLoggedIn(false);
   };
 
   const handleProfileEditClick = () => {
@@ -164,12 +153,16 @@ export default function App() {
 
   const handleProfileEditSubmit = (newInfo) => {
     const token = localStorage.getItem("jwt");
+    setIsLoading(true);
     updateUser(newInfo, token)
       .then((res) => {
         setCurrentUser(res);
         closeActiveModal();
       })
-      .catch(console.error);
+      .catch(console.error)
+      .finally(() => {
+        setIsLoading(false);
+      });
   };
 
   const handleCardLike = ({ _id }, isLiked) => {
@@ -225,6 +218,30 @@ export default function App() {
     }
   }, [isLoggedIn]);
 
+  useEffect(() => {
+    if (!activeModal) return;
+
+    const handleEscClose = (evt) => {
+      if (evt.key === "Escape") {
+        closeActiveModal();
+      }
+    };
+
+    const handleClickOutsideClose = (evt) => {
+      if (evt.target.classList.contains("modal")) {
+        closeActiveModal();
+      }
+    };
+
+    document.addEventListener("keydown", handleEscClose);
+    document.addEventListener("click", handleClickOutsideClose);
+
+    return () => {
+      document.removeEventListener("keydown", handleEscClose);
+      document.removeEventListener("click", handleClickOutsideClose);
+    };
+  }, [activeModal]);
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="App">
@@ -256,15 +273,17 @@ export default function App() {
               <Route
                 path="/profile"
                 element={
-                  <Profile
-                    handleAddClick={handleAddClick}
-                    onCardClick={handleCardClick}
-                    clothingItems={clothingItems}
-                    handleLogOutClick={handleLogOutClick}
-                    handleProfileEditClick={handleProfileEditClick}
-                    onCardLike={handleCardLike}
-                    isLoggedIn={isLoggedIn}
-                  />
+                  <ProtectedRoute isLoggedIn={isLoggedIn}>
+                    <Profile
+                      handleAddClick={handleAddClick}
+                      onCardClick={handleCardClick}
+                      clothingItems={clothingItems}
+                      handleLogOutClick={handleLogOutClick}
+                      handleProfileEditClick={handleProfileEditClick}
+                      onCardLike={handleCardLike}
+                      isLoggedIn={isLoggedIn}
+                    />
+                  </ProtectedRoute>
                 }
               />
             </Routes>
@@ -276,6 +295,7 @@ export default function App() {
                 closeActiveModal={closeActiveModal}
                 onAddItem={handleAddItemSubmit}
                 isOpen={activeModal === "add-garment"}
+                isLoading={isLoading}
               />
             )}
             <LoginModal
@@ -283,18 +303,21 @@ export default function App() {
               isOpen={activeModal === "login"}
               handleSignUpClick={handleSignUpClick}
               onLogIn={handleLogIn}
+              isLoading={isLoading}
             />
             <RegisterModal
               handleCloseClick={closeActiveModal}
               isOpen={activeModal === "register"}
               handleLogInClick={handleLogInClick}
               onSignUp={handleSignUp}
+              isLoading={isLoading}
             />
             <EditProfileModal
               handleCloseClick={closeActiveModal}
               isOpen={activeModal === "profile-edit"}
               onEditSubmit={handleProfileEditSubmit}
               currentUser={currentUser}
+              isLoading={isLoading}
             />
             <ItemModal
               activeModal={activeModal}
@@ -307,6 +330,7 @@ export default function App() {
               handleCloseClick={closeActiveModal}
               handleDeteleClick={handleDeteleClick}
               clothingItem={selectedCard}
+              isLoading={isLoading}
             />
           </CurrentTemperatureUnitContext.Provider>
         </div>

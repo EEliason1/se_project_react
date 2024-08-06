@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import "./AddItemModal.css";
 
-const AddItemModal = ({ activeModal, closeActiveModal, onAddItem, isOpen }) => {
+const AddItemModal = ({ isLoading, closeActiveModal, onAddItem, isOpen }) => {
   const [name, setName] = useState("");
   const [imageUrl, setImageUrl] = useState("");
   const [weather, setWeather] = useState("");
@@ -11,7 +11,7 @@ const AddItemModal = ({ activeModal, closeActiveModal, onAddItem, isOpen }) => {
     setName(evt.target.value);
   };
 
-  const handleImagechange = (evt) => {
+  const handleImageChange = (evt) => {
     setImageUrl(evt.target.value);
   };
 
@@ -33,7 +33,7 @@ const AddItemModal = ({ activeModal, closeActiveModal, onAddItem, isOpen }) => {
   return (
     <ModalWithForm
       titleText="New garment"
-      buttonText="Add garment"
+      buttonText={isLoading ? "Adding..." : "Add garment"}
       handleCloseClick={closeActiveModal}
       onSubmit={handleFormSubmit}
       isOpen={isOpen}
@@ -62,7 +62,7 @@ const AddItemModal = ({ activeModal, closeActiveModal, onAddItem, isOpen }) => {
           placeholder="Image URL"
           name="imageUrl"
           value={imageUrl}
-          onChange={handleImagechange}
+          onChange={handleImageChange}
           required
         />
       </label>

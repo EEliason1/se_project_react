@@ -19,7 +19,7 @@ export default function ModalWithForm({
             className="modal__close-button"
             type="button"
             onClick={handleCloseClick}
-          ></button>
+          />
           {children}
           <div className="modal__submit-buttons">
             <button className="modal__submit-button" type="submit">

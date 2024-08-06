@@ -1,15 +1,19 @@
 import React, { useState } from "react";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
 import "./EditProfileModal.css";
+import { useContext } from "react";
+import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 
 const EditProfileModal = ({
   handleCloseClick,
   isOpen,
   onEditSubmit,
-  currentUser,
+  isLoading,
 }) => {
   const [name, setName] = useState("");
   const [avatar, setAvatar] = useState("");
+
+  const currentUser = useContext(CurrentUserContext);
 
   const handleNameChange = (evt) => {
     setName(evt.target.value);
@@ -32,7 +36,7 @@ const EditProfileModal = ({
   return (
     <ModalWithForm
       titleText="Change profile data"
-      buttonText="Save changes"
+      buttonText={isLoading ? "Saving..." : "Save changes"}
       handleCloseClick={handleCloseClick}
       onSubmit={handleFormSubmit}
       isOpen={isOpen}
