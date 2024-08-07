@@ -1,6 +1,8 @@
 import { request } from "./utils";
 
-const baseUrl = "http://localhost:3001";
+const baseUrl = process.env.NODE_ENV === "production" 
+  ? "https://api.wtwr.lovethosetrains.com"
+  : "http://localhost:3001";
 
 function getItems() {
   return request(`${baseUrl}/items`);
